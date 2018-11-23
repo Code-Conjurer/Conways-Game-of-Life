@@ -6,11 +6,11 @@ import javax.swing.*;
 public class Run {
 
     static Environment environment;
-    private static final int INTERVAL = 20;
+    private static final int INTERVAL = 2000;
 
     public Run(){
 
-        environment = new Environment(200, 200);
+        environment = new Environment(20, 20);
         double t = System.currentTimeMillis();
         double temp;
         while (true){
