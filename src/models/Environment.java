@@ -1,5 +1,8 @@
 package models;
 
+import javafx.scene.canvas.GraphicsContext;
+import ui.CanvasPainter;
+
 import java.util.Arrays;
 
 public class Environment {
@@ -7,7 +10,7 @@ public class Environment {
     static int ySize;
     static Cell[][] grid;
     static Cell[][] grid_updated;
-    static boolean flag;
+    private CanvasPainter painter;
 
     public Environment(int xSize, int ySize){
         this.xSize = xSize;
@@ -27,17 +30,29 @@ public class Environment {
                 temp = grid[i][j];
 
                 if(temp.isAlive())
-                    System.out.print('*');
+                    painter.paintSelected(i, j);
+                    //System.out.print('*');
                 else
-                    System.out.print('-');
+                    painter.clearSelected(i, j);
+                    //System.out.print('-');
                 status = temp.update(i,j);
                 grid_updated[i][j].setAlive(status);
             }
-            System.out.println();
+            //System.out.println();
         }
-        System.out.println();
+        //System.out.println();
 
         deepCopyGrid(grid_updated, grid);
+    }
+
+    public void toggleCell(int x, int y){
+        Cell cell = grid[x][y];
+        cell.setAlive( !cell.isAlive() );
+        if(cell.isAlive()){
+            painter.paintSelected(x, y);
+        }else{
+            painter.clearSelected(x, y);
+        }
     }
 
     private void initialize(){
@@ -49,10 +64,14 @@ public class Environment {
 
         deepCopyGrid(grid, grid_updated);
 
-        grid[3][3] = new Cell(true);
-        grid[4][3] = new Cell(true);
-        grid[5][3] = new Cell(true);
+        //grid[3][3] = new Cell(true);
+        //grid[4][3] = new Cell(true);
+        //grid[5][3] = new Cell(true);
 
+    }
+
+    public void addCanvasPainter(CanvasPainter painter){
+        this.painter = painter;
     }
 
     //remove try-catch to improve performance
