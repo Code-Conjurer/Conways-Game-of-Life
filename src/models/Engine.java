@@ -51,4 +51,8 @@ public class Engine {
         environment.toggleCell(gridX, gridY);
     }
 
+    public void addCell(int gridX, int gridY){
+        environment.addCell(gridX, gridY);
+    }
+
 }

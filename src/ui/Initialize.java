@@ -12,9 +12,9 @@ import models.Engine;
 
 public class Initialize extends Application {
 
-    private final int SCREEN_HEIGHT = 700;
-    private final int SCREEN_WIDTH = 700;
-    private static final int GRID_SIZE = 20;
+    private final static int SCREEN_HEIGHT = 700;
+    private final static int SCREEN_WIDTH = SCREEN_HEIGHT;
+    private static final int GRID_PIXEL_SIZE = 10;
     private static Engine engine;
 
     private StackPane root;
@@ -23,9 +23,9 @@ public class Initialize extends Application {
 
     public static void main(String... args){
 
-        engine = new Engine(GRID_SIZE);
+        engine = new Engine(SCREEN_HEIGHT / GRID_PIXEL_SIZE );
         launch(args);
-        //engine = new Engine(GRID_SIZE);
+        //engine = new Engine(GRID_PIXEL_SIZE);
     }
 
 
@@ -49,7 +49,7 @@ public class Initialize extends Application {
         root.setMaxWidth(SCREEN_WIDTH);
         root.setMaxHeight(SCREEN_HEIGHT);
 
-        canvas = new EnvironmentCanvas(SCREEN_WIDTH, SCREEN_HEIGHT, GRID_SIZE);
+        canvas = new EnvironmentCanvas(SCREEN_WIDTH, SCREEN_HEIGHT, GRID_PIXEL_SIZE);
 
         root.getChildren().add(canvas);
 
@@ -89,7 +89,17 @@ public class Initialize extends Application {
         scene.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event){
-                engine.toggleCell((int)(event.getSceneX() / GRID_SIZE), (int)(event.getSceneY() / GRID_SIZE));
+                engine.toggleCell((int)(event.getX() / GRID_PIXEL_SIZE), (int)(event.getY() / GRID_PIXEL_SIZE));
+                //canvas.paintSelected(
+                  //      calculateGridPos(event.getSceneX()),
+                    //    calculateGridPos(event.getSceneY()));
+            }
+        });
+
+        scene.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event){
+                engine.addCell((int)(event.getX() / GRID_PIXEL_SIZE), (int)(event.getY() / GRID_PIXEL_SIZE));
                 //canvas.paintSelected(
                   //      calculateGridPos(event.getSceneX()),
                     //    calculateGridPos(event.getSceneY()));
@@ -99,6 +109,6 @@ public class Initialize extends Application {
     }
 
     /*private int calculateGridPos(double mousePos){
-        return (int)(mousePos / GRID_SIZE) * GRID_SIZE;
+        return (int)(mousePos / GRID_PIXEL_SIZE) * GRID_PIXEL_SIZE;
     }*/
 }
