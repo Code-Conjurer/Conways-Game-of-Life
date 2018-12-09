@@ -109,4 +109,12 @@ public class Environment {
             }
         }
     }
+
+    public int getXSize(){
+        return xSize;
+    }
+
+    public int getYSize(){
+        return ySize;
+    }
 }

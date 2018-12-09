@@ -33,7 +33,6 @@ public class CanvasPainter {
 
     public void paintSelected(int gridX, int gridY, Color color){
         gc.setFill(color);
-        System.out.println(color);
         gc.fillRect(gridX * gridSize , gridY * gridSize , gridSize, gridSize);
     }
 

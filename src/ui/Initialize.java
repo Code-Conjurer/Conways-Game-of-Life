@@ -14,7 +14,7 @@ public class Initialize extends Application {
 
     private final static int SCREEN_HEIGHT = 700;
     private final static int SCREEN_WIDTH = SCREEN_HEIGHT;
-    private static final int GRID_PIXEL_SIZE = 10;
+    private static final int GRID_PIXEL_SIZE = 4;
     private static Engine engine;
 
     private StackPane root;
