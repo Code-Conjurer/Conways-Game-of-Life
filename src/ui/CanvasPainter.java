@@ -1,6 +1,7 @@
 package ui;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class CanvasPainter {
     private GraphicsContext gc;
@@ -25,7 +26,14 @@ public class CanvasPainter {
 
     }
 
-    public void paintSelected(int gridX, int gridY){
+    /*public void paintSelected(int gridX, int gridY){
+        gc.setFill(Color.BLACK);
+        gc.fillRect(gridX * gridSize , gridY * gridSize , gridSize, gridSize);
+    }*/
+
+    public void paintSelected(int gridX, int gridY, Color color){
+        gc.setFill(color);
+        System.out.println(color);
         gc.fillRect(gridX * gridSize , gridY * gridSize , gridSize, gridSize);
     }
 

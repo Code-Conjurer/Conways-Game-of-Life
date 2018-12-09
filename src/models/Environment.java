@@ -1,6 +1,6 @@
 package models;
 
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import ui.CanvasPainter;
 
 import java.util.Arrays;
@@ -23,20 +23,21 @@ public class Environment {
     }
 
     public void updateGrid(){
-        boolean status;
+        boolean isAlive;
         Cell temp;
         for(int i = 0; i < xSize; i++){
             for(int j = 0; j < ySize; j++){
                 temp = grid[i][j];
 
                 if(temp.isAlive())
-                    painter.paintSelected(i, j);
+                    painter.paintSelected(i, j, temp.getColor());
                     //System.out.print('*');
                 else
                     painter.clearSelected(i, j);
                     //System.out.print('-');
-                status = temp.update(i,j);
-                grid_updated[i][j].setAlive(status);
+                isAlive = temp.update(i,j);
+                grid_updated[i][j].setAlive(isAlive);
+                grid_updated[i][j].setColor(temp.getColor());
             }
             //System.out.println();
         }
@@ -49,21 +50,29 @@ public class Environment {
         Cell cell = grid[x][y];
         cell.setAlive( !cell.isAlive() );
         if(cell.isAlive()){
-            painter.paintSelected(x, y);
+            painter.paintSelected(x, y, cell.getColor());
         }else{
             painter.clearSelected(x, y);
         }
     }
 
     public void addCell(int x, int y){
-        grid[x][y].setAlive(true);
-        painter.paintSelected(x, y);
+        Cell cell = grid[x][y];
+        cell.setAlive(true);
+        painter.paintSelected(x, y, cell.getColor());
     }
 
     private void initialize(){
+        double randRed;
+        double randGreen;
+        double randBlue;
         for(int i = 0; i < xSize; i++){
             for(int j = 0; j < ySize; j++){
-                grid[i][j] = new Cell(false);
+                randRed = (Math.random());//Javafx Color range is from 0.0 - 1.0
+                randGreen = (Math.random());
+                randBlue = (Math.random());
+                grid[i][j] = new Cell(false, new Color(randRed, randGreen, randBlue, 1));
+                //grid[i][j] = new Cell(false, Color.BLACK);
             }
         }
 
@@ -87,6 +96,10 @@ public class Environment {
         }catch(IndexOutOfBoundsException e) {
             return false;
         }
+    }
+
+    public Color getColor(int x, int y){
+        return grid[x][y].getColor();
     }
 
     private void deepCopyGrid(Cell[][] original, Cell[][] copy ){
