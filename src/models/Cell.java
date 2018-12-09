@@ -86,12 +86,19 @@ public class Cell{
         green /= colors.length;
         blue /= colors.length;
 
-        //red = mutate();
-        //green = mutate(green);
-        //blue = mutate(blue);
+        red = mutate(red);
+        green = mutate(green);
+        blue = mutate(blue);
         return new Color(red, green, blue, 1);
     }
 
+    // 1/n th of a change
+    private double mutate(double value){
+        final int n = 9;
+        value *= n;
+        value += Math.random();
+        return value/(n + 1);
+    }
     public Color getColor(){
         return color;
     }
